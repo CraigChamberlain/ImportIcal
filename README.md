@@ -9,6 +9,8 @@ It is already possible to Assemble a calendar with events and alarms (reminders)
 
 Serialisation/De-Serialisation will follow Shortly.
 
+![example workflow](https://github.com/CraigChamberlain/ImportIcal/actions/workflows/dotnet.yml/badge.svg)
+
 ##Install##
 
 ````pwsh
