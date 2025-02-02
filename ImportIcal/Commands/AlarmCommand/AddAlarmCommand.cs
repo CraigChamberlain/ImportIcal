@@ -3,7 +3,7 @@ using System.Management.Automation;
 
 namespace ImportIcal.Commands.AlarmCommand
 {
-    [Cmdlet("Add", "IcalAlarm")]
+    [Cmdlet("Add", "Alarm")]
     public class AddAlarmCommand : AlarmCommand
     {
         [Parameter(Mandatory = true)]

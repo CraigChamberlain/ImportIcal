@@ -4,7 +4,7 @@ using System.Management.Automation;
 
 namespace ImportIcal.Commands.EventCommand
 {
-    [Cmdlet("Add", "IcalEvent")]
+    [Cmdlet("Add", "Event")]
     public class AddEventCommand : EventCommand
     {
         [Parameter(Mandatory = true)]

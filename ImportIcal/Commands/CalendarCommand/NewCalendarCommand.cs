@@ -5,7 +5,7 @@ using System.Management.Automation;
 namespace ImportIcal.Commands.CalendarCommand
 {
     // https://www.rfc-editor.org/rfc/rfc2445#section-4.4
-    [Cmdlet("New", "IcalCalendar", DefaultParameterSetName = UseLocalTimeZoneSet)]
+    [Cmdlet("New", "Calendar", DefaultParameterSetName = UseLocalTimeZoneSet)]
     public class NewCalendarCommand : PSCmdlet
     {
         // TODO should be manditory or preset by this App

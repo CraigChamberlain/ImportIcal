@@ -30,7 +30,7 @@ CompanyName = 'Craig Chamberlain - IT'
 Copyright = '(c) Craig Chamberlain. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'To follow'
+Description = 'Cmdlets to create and assemble objects from the Ical.Net library.'
 
 # Minimum version of the PowerShell engine required by this module
 PowerShellVersion = '7.0'
@@ -54,10 +54,10 @@ PowerShellVersion = '7.0'
 # RequiredModules = @()
 
 # Assemblies that must be loaded prior to importing this module
-# RequiredAssemblies = @()
+RequiredAssemblies = @("Ical.Net.dll")
 
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
-# ScriptsToProcess = @()
+ScriptsToProcess = @("ImportScript.ps1")
 
 # Type files (.ps1xml) to be loaded when importing this module
 # TypesToProcess = @()
@@ -72,7 +72,13 @@ PowerShellVersion = '7.0'
 FunctionsToExport = @()
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = @()
+CmdletsToExport = @(
+    "New-Calendar"
+    "New-Event",
+    "Add-Event",
+    "New-Alarm",
+    "Add-Alarm"
+)
 
 # Variables to export from this module
 VariablesToExport = ""
@@ -101,7 +107,7 @@ PrivateData = @{
         # LicenseUri = ''
 
         # A URL to the main website for this project.
-        #ProjectUri = 'https://github.com/CraigChamberlain/SendMail'
+        #ProjectUri = 'https://github.com/CraigChamberlain/ImportIcal'
 
         # A URL to an icon representing this module.
         # IconUri = ''
@@ -126,7 +132,7 @@ PrivateData = @{
 # HelpInfoURI = ''
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
-# DefaultCommandPrefix = 'Ical'
+DefaultCommandPrefix = 'Ical'
 
 }
 

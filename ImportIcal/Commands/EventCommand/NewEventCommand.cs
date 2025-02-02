@@ -3,7 +3,7 @@ using System.Management.Automation;
 
 namespace ImportIcal.Commands.EventCommand
 {
-    [Cmdlet("New", "IcalEvent")]
+    [Cmdlet("New", "Event")]
     public class NewEventCommand : EventCommand
     {
         protected override void ProcessRecord()

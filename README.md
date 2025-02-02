@@ -1,5 +1,5 @@
 # ImportIcal
-Module containing Cmdlts to create and assemble objects from the [Ical.Net](https://github.com/ical-org/ical.net) library.
+Module containing Cmdlets to create and assemble objects from the [Ical.Net](https://github.com/ical-org/ical.net) library.
 
 I have made a variety of parameter sets in an attempt to make it easy to assemble a valid Calender object in reference to the specification [rfc2445](https://www.rfc-editor.org/rfc/rfc2445).
 
@@ -9,7 +9,7 @@ It is already possible to Assemble a calendar with events and alarms (reminders)
 
 Serialisation/De-Serialisation will follow Shortly.
 
-![example workflow](https://github.com/CraigChamberlain/ImportIcal/actions/workflows/dotnet.yml/badge.svg)
+![example workflow]("https://github.com/CraigChamberlain/ImportIcal/actions/workflows/dotnet.yml/badge.svg")
 
 ##Install##
 

@@ -11,8 +11,7 @@ Describe 'New-IcalCalendar' {
 
         $calender.TimeZones.Count | Should -Be 1
         
-        # TODO Should find a way to get this from the system.
-        #$calender.TimeZones[0].TzId | Should -Be "Europe/London"
+        $calender.TimeZones[0].Id | Should -Be ([Ical.Net.CalendarComponents.VTimeZone]::FromLocalTimeZone().Id)
     }
 
     It 'Given parameters, values appear in object.' {

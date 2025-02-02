@@ -3,7 +3,7 @@ using System.Management.Automation;
 
 namespace ImportIcal.Commands.AlarmCommand
 {
-    [Cmdlet("New", "IcalAlarm")]
+    [Cmdlet("New", "Alarm")]
     public class NewAlarmCommand : AlarmCommand
     {
         protected override void ProcessRecord()

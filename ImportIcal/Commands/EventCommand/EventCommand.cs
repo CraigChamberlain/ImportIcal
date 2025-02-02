@@ -9,6 +9,8 @@ namespace ImportIcal.Commands.EventCommand
     {
         //TODO Allday event? start 00 Duration 24H?
 
+
+        //TODO add spec link
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public string? Class { get; set; }
 
