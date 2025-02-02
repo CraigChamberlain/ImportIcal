@@ -1,51 +1,46 @@
-# SendMail
-Module of helper tools for the MimeKit library replace and extend upon `Send-MailMessage`.
+# ImportIcal
+Module containing Cmdlts to create and assemble objects from the [Ical.Net](https://github.com/ical-org/ical.net) library.
 
-As you may know `Send-MailMessage` is depricated and there is no versitile replacement without having to import nuget packages or dlls and do C# coding in the powershell environment using a library such as [MimeKit](https://mimekit.net/).
-https://adamtheautomator.com/powershell-email/
+I have made a variety of parameter sets in an attempt to make it easy to assemble a valid Calender object in reference to the specification [rfc2445](https://www.rfc-editor.org/rfc/rfc2445).
 
-This tool will have support for creating connections to any supported SMTP server with any supported [Authentication prococol](https://mimekit.net/docs/html/N_MailKit_Security.htm).  Initially only the most common authentication will have cmdlet support but I will expose a way of constructing your own MailKit objects without having to add-types which can be frustrating when jumping between machines.
+This project is in its early stage and does not yet include all of the object types as I decide how I want to structure and test the project and also learn how to interpret the specification.
 
-I have replicated the API of `Send-MailMessage` so that the new module can replace it without re-writing anything other than the command.
+It is already possible to Assemble a calendar with events and alarms (reminders).
+
+Serialisation/De-Serialisation will follow Shortly.
 
 ##Install##
 
 ````pwsh
-Install-Module SendMail
+Install-Module ImportIcal
 ````
 
 ##Examples##
 
+Please see the [tests directory](./tree/master/ImportIcal/tests) for an extensive set of examples in the Pester files:
+
 ````pwsh
+$calendar = New-IcalCalendar `
+        -ProductId "//ABC Corporation//NONSGML My Product//EN" `
+        -Version "2.0"`
+        -Scale "GREGORIAN" `
+        -Method "REQUEST" `
+        -VTimeZones "America/New_York","Africa/Abidjan"
+
 Get-SomeData |
     For-EachObject {
         $name = $_.SomeProperty | Select-Object $SomeTransformation
         $OtherVarialbe = $_.SomeData | ConvertTo-Html
-        [pscustomobject]@{
-        To = "some.person@example.com"
-        Body = Get-EmailBody -Arg1 $Name -Arg2 $OtherVariable
-        Attachment = $Filename
-        Subject = "Some $Variable1 Subject"
-    } |
-    Send-Mail -From "some.otherperson@example.com" -SmtpServer "smtp.example.com" -Port $config.Port 25 -Authentication $Cred -UseSsl
-````
-Or
-````pwsh
-$Connection = Connect-Smtp -SmtpServer 127.0.0.1 -Port 25 -SecureSocket StartTlsWhenAvailable
 
-Get-SomeData |
-    For-EachObject {
-        ...
-        @{
-            To = $_.To
-            Cc = @("recp1@example.com","RecipientName <recp2@example.com>")
-            TextBody = $_.Body
-            Attachments = $_.Attachments
+        [pscustomobject]@{
+            AttendeeEmail = "some.person@example.com"
+            AttendeeName = $name
+            Description = Get-Body -Arg1 $OtherVariable
+            Attachments = $Filename
+            Subject = "Some $Variable1 Subject"
+            Start = Get-Date -Year 2025 -Month 12 -Day 1 
         }
     } |
-    New-MimeMessage -From "some.otherperson@example.com" |
-    Send-Mail -Connection $Connection
-
-$Connection | Disconnect-Smtp
+    Add-IcalEvent -Calendar $calendar 
 ````
       
