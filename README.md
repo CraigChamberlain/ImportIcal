@@ -9,7 +9,9 @@ It is already possible to Assemble a calendar with events and alarms (reminders)
 
 Serialisation/De-Serialisation will follow Shortly.
 
-![.Net Build]("https://github.com/CraigChamberlain/ImportIcal/actions/workflows/dotnet.yml/badge.svg")
+
+![Net Build](https://github.com/CraigChamberlain/ImportIcal/actions/workflows/dotnet.yml/badge.svg)
+
 
 ## Install
 
