@@ -9,15 +9,15 @@ It is already possible to Assemble a calendar with events and alarms (reminders)
 
 Serialisation/De-Serialisation will follow Shortly.
 
-![example workflow]("https://github.com/CraigChamberlain/ImportIcal/actions/workflows/dotnet.yml/badge.svg")
+![.Net Build]("https://github.com/CraigChamberlain/ImportIcal/actions/workflows/dotnet.yml/badge.svg")
 
-##Install##
+## Install
 
 ````pwsh
 Install-Module ImportIcal
 ````
 
-##Examples##
+## Examples
 
 Please see the [tests directory](./tree/master/ImportIcal/tests) for an extensive set of examples in the Pester files:
 
