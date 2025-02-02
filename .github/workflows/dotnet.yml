@@ -26,8 +26,5 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       shell: pwsh
-      run: |
-            dotnet publish
-            Import-Module "./ImportIcal/bin/Debug/net7.0/publish/ImportIcal.dll"
-            Invoke-Pester "./ImportIcal/tests"
+      run: ./Test.ps1
 
