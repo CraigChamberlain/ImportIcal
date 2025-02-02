@@ -26,5 +26,5 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       shell: pwsh
-      run: ./Test.ps1
+      run: ./ImportIcal/Test.ps1
 
