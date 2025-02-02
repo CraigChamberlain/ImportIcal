@@ -1,2 +1,2 @@
-Write-Warning("Imported")
+Write-Warning("Please check for updates regularly, this is in early development and I will be adding features regularly.`r`nThe API is prone to change at this stage.")
 # TODO Write-Warning if newer version is available see pnpPowershell

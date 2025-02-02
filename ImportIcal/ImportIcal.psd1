@@ -12,7 +12,7 @@
 RootModule = 'ImportIcal.dll'
 
 # Version number of this module.
-ModuleVersion = '0.0.0'
+ModuleVersion = '0.0.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -77,7 +77,9 @@ CmdletsToExport = @(
     "New-Event",
     "Add-Event",
     "New-Alarm",
-    "Add-Alarm"
+    "Add-Alarm",
+    "Import-Calendar", 
+    "Export-Calendar"
 )
 
 # Variables to export from this module
