@@ -8,10 +8,10 @@ namespace ImportIcal.Commands.AlarmCommand
     public abstract class AlarmCommand : PSCmdlet
     {
         [Parameter(ValueFromPipelineByPropertyName = true)]
-        public string AlarmAction { get; set; } // AlarmAction.Display;
+        public string? AlarmAction { get; set; } // AlarmAction.Display;
 
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true)]
-        public TimeSpan Duration { get; set; }
+        public TimeSpan? Duration { get; set; }
 
         protected Alarm CreateAlarm()
         {

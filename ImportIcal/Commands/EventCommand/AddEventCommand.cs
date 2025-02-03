@@ -8,7 +8,7 @@ namespace ImportIcal.Commands.EventCommand
     public class AddEventCommand : EventCommand
     {
         [Parameter(Mandatory = true)]
-        public Calendar Calendar { get; set; }
+        public Calendar? Calendar { get; set; }
 
         [Parameter()]
         public SwitchParameter Passthru { get; set; }
@@ -16,9 +16,10 @@ namespace ImportIcal.Commands.EventCommand
         protected override void ProcessRecord()
         {
 
-            var evt = Calendar.Create<CalendarEvent>();
+            var evt = Calendar?.Create<CalendarEvent>();
 
-            SetEvent(evt);
+            if (evt != null)
+                SetEvent(evt);
 
             base.ProcessRecord();
         }

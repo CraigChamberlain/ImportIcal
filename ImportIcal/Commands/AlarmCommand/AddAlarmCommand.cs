@@ -7,7 +7,7 @@ namespace ImportIcal.Commands.AlarmCommand
     public class AddAlarmCommand : AlarmCommand
     {
         [Parameter(Mandatory = true)]
-        public CalendarEvent Event { get; set; }
+        public CalendarEvent? Event { get; set; }
 
         [Parameter()]
         public SwitchParameter Passthru { get; set; }
@@ -16,7 +16,7 @@ namespace ImportIcal.Commands.AlarmCommand
         {
 
             var alarm = CreateAlarm();
-            Event.Alarms.Add(alarm);
+            Event?.Alarms.Add(alarm);
 
             base.ProcessRecord();
         }
