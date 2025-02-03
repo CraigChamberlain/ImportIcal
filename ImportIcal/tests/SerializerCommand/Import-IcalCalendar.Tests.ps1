@@ -36,4 +36,15 @@ Describe 'Import-IcalCalendar functions with a memory stream' {
     $calendar.Version | Should -Be  "2.0"
     
     }
+     It 'Should load a multipartcalender' {
+
+    $calendar = "$PSScriptRoot\multicalendar.ics" | Import-IcalCalendar 
+
+    $calendar.Count | Should -Be 3
+
+    #Deserializer tested in Ical.Net no need to test further here.
+    $calendar[0].ProductId | Should -Be "-//xyz Corp//NONSGML PDA Calendar Version 1.0//EN"
+    $calendar[0].Version | Should -Be  "2.0"
+    
+    }
 }
