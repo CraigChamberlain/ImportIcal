@@ -25,8 +25,6 @@ Please see the [tests directory](./tree/master/ImportIcal/tests) for an extensiv
 
 ````pwsh
 $calendar = New-IcalCalendar `
-        -ProductId "//ABC Corporation//NONSGML My Product//EN" `
-        -Version "2.0"`
         -Scale "GREGORIAN" `
         -Method "REQUEST" `
         -VTimeZones "America/New_York","Africa/Abidjan"
