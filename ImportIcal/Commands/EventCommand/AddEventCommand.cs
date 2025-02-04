@@ -4,9 +4,10 @@ using System.Management.Automation;
 
 namespace ImportIcal.Commands.EventCommand
 {
-    [Cmdlet("Add", "Event")]
+    [Cmdlet("Add", "Event", DefaultParameterSetName = Sets.DateEndSet)]
     public class AddEventCommand : EventCommand
     {
+        [ValidateNotNull]
         [Parameter(Mandatory = true)]
         public Calendar? Calendar { get; set; }
 

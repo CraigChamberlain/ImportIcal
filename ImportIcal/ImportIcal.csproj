@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>ImportIcal</PackageId>
-    <Version>0.0.2</Version>
+    <Version>0.0.3</Version>
     <Authors>Craig Chamberlain</Authors>
     <Company>Craig Chamberlain IT</Company>
     <Product>PowerShell Module</Product>
