@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>ImportIcal</PackageId>
-    <Version>0.0.3</Version>
+    <Version>0.0.4</Version>
     <Authors>Craig Chamberlain</Authors>
     <Company>Craig Chamberlain IT</Company>
     <Product>PowerShell Module</Product>
@@ -16,8 +16,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ical.Net" Version="4.3.1" />
-    <PackageReference Include="System.Management.Automation" Version="7.3.12" />
+    <PackageReference Include="Ical.Net" Version="5.2.3" />
+    <PackageReference Include="System.Management.Automation" Version="7.6.5" />
   </ItemGroup>
 
   <ItemGroup>

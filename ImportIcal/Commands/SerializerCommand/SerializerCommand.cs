@@ -34,7 +34,7 @@ namespace ImportIcal.Commands.SerialisarCommand
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true, ValueFromPipeline = true, ParameterSetName = Sets.Stream)]
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true, ValueFromPipeline = true, ParameterSetName = Sets.String)]
         [Parameter(ValueFromPipelineByPropertyName = true, Mandatory = true, ValueFromPipeline = true, ParameterSetName = Sets.File)]
-        public Calendar? Calendar { get; set; }
+        public Calendar Calendar { get; set; } = null!;
 
         protected override void BeginProcessing()
         {

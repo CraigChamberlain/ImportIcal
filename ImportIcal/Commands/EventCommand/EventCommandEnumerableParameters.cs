@@ -50,10 +50,10 @@ namespace ImportIcal.Commands.EventCommand
 
 
         //https://www.rfc-editor.org/rfc/rfc2445#section-4.8.5.1
-
-        public IEnumerable<PeriodList>? ExceptionDates { get; private set; }
+        public IEnumerable<CalDateTime>? ExceptionDates { get; private set; }
 
         // https://www.rfc-editor.org/rfc/rfc2445#section-4.8.5.2
+        [Obsolete("'RecurringComponent.ExceptionRules' is obsolete: 'EXRULE is marked as deprecated in RFC 5545 and will be removed in a future version'.")]
         public IEnumerable<RecurrencePattern>? ExceptionRules { get; private set; }
 
 
@@ -76,10 +76,10 @@ namespace ImportIcal.Commands.EventCommand
         public string[]? Resources { get; private set; }
 
         // https://www.rfc-editor.org/rfc/rfc2445#section-4.8.5.3
-        public IEnumerable<PeriodList>? RecurrenceDates { get; private set; }
+        public IEnumerable<Period>? RecurrenceDates { get; private set; }
 
         // https://www.rfc-editor.org/rfc/rfc2445#section-4.8.5.4
-        public IEnumerable<RecurrencePattern>? RecurrenceRules { get; private set; }
+        public RecurrenceRule? RecurrenceRule { get; private set; }
 
         //Xprop?
         // TODO understand seems to be set elsewhere.
@@ -94,7 +94,34 @@ namespace ImportIcal.Commands.EventCommand
                 }
         }
 
-        public void AttachEnumerableParameters(CalendarEvent evt) {
+        public static void AddEach(ExceptionDates list, IEnumerable<CalDateTime>? toAdd)
+        {
+            if (toAdd is not null)
+                foreach (var item in toAdd)
+                {
+                    list.Add(item);
+                }
+        }
+
+        public static void AddEach(RecurrenceDates list, IEnumerable<CalDateTime>? toAdd)
+        {
+            if (toAdd is not null)
+                foreach (var item in toAdd)
+                {
+                    list.Add(item);
+                }
+        }
+
+        public static void AddEach(RecurrenceDates list, IEnumerable<Period>? toAdd)
+        {
+            if (toAdd is not null)
+                foreach (var item in toAdd)
+                {
+                    list.Add(item);
+                }
+        }
+
+            public void AttachEnumerableParameters(CalendarEvent evt) {
 
             AddEach(evt.Attachments, Attachments);
             AddEach(evt.Attendees, Attendees);
@@ -107,7 +134,6 @@ namespace ImportIcal.Commands.EventCommand
             AddEach(evt.RelatedComponents, RelatedComponents);
             AddEach(evt.Resources, Resources);
             AddEach(evt.RecurrenceDates, RecurrenceDates);
-            AddEach(evt.RecurrenceRules, RecurrenceRules);
 
         }
 

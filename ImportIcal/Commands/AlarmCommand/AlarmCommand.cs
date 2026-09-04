@@ -1,5 +1,4 @@
-﻿using Ical.Net;
-using Ical.Net.CalendarComponents;
+﻿using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
 using System.Management.Automation;
 
@@ -17,7 +16,10 @@ namespace ImportIcal.Commands.AlarmCommand
         {
             var alarm = new Alarm();
             alarm.Action = AlarmAction;
-            alarm.Trigger.Duration = Duration;
+            if (Duration != null)
+            {   var duration = Ical.Net.DataTypes.Duration.FromTimeSpanExact((TimeSpan)Duration);
+                alarm.Trigger = new Trigger(duration);
+            }
 
             return alarm;
         }

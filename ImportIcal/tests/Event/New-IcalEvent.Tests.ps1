@@ -12,9 +12,9 @@ Describe 'New-IcalEvent' {
             -Class "PUBLIC" `
             -Created  ([Ical.Net.DataTypes.CalDateTime]::new(2000, 1, 1)) `
             -Description "Description text." `
-            -Start (Get-Date -Month 1 -Year 2000 -Day 2) `
+            -Start ([DateOnly]::new(2000,1,2)) `
             -GeographicLocation ([Ical.Net.DataTypes.GeographicLocation]::new("37.386013","-122.082932")) `
-            -LastModified (Get-Date -Month 1 -Year 2000 -Day 3) `
+            -LastModified (Get-Date -Month 1 -Year 2000 -Day 3 -Hour 0 -Min 0 -Second 0) `
             -Location "SomeLocation" `
             -Organizer  "bob@example.com" `
             -Priority 2 `
@@ -22,9 +22,9 @@ Describe 'New-IcalEvent' {
             -Status "TENTATIVE" `
             -Summary "Summary Text" `
             -Transparency "OPAQUE" `
-            -RecurrenceId (Get-Date -Month 1 -Year 2000 -Day 4) `
+            -RecurrenceId (Get-Date -Month 1 -Year 2000 -Day 4 -Hour 0 -Min 0 -Second 0) `
             -Url "https://www.rfc-editor.org/rfc/rfc2445#section-4.8.4.6" `
-            -End (Get-Date -Month 1 -Year 2000 -Day 6) 
+            -End (Get-Date -Month 1 -Year 2000 -Day 6 -Hour 0 -Min 0 -Second 0) 
 
             # TODO -Duration 100000
 
@@ -32,15 +32,13 @@ Describe 'New-IcalEvent' {
         $evt.Created.Year | Should -Be 2000
         $evt.Created.Month | Should -Be 1
         $evt.Created.Day | Should -Be 1
-
-        # TODO look at time only, datetime conversion seems to be fine
-        # There is a Has time property. Not clear how to make it just time, or just date.
-        #$evt.Created.Hour | Should -BeNullOrEmpty
+        $evt.Created.HasTime | Should -Be $false
+        $evt.Created.Hour | Should -Be 0
         
         $evt.Description | Should -Be  "Description text." 
-        $evt.Start | Should -Be ([Ical.Net.DataTypes.CalDateTime](Get-Date -Month 1 -Year 2000 -Day 2)) 
+        $evt.Start | Should -Be ([Ical.Net.DataTypes.CalDateTime]::new(2000,1, 2))
         $evt.GeographicLocation | Should -Be "37.386013;-122.082932" 
-        $evt.LastModified | Should -Be  ([Ical.Net.DataTypes.CalDateTime](Get-Date -Month 1 -Year 2000 -Day 3)) 
+        $evt.LastModified | Should -Be  ([Ical.Net.DataTypes.CalDateTime]::new(2000,1, 3,0,0,0)) 
         $evt.Location | Should -Be "SomeLocation" 
         $evt.Organizer.Value | Should -Be "mailto:bob@example.com" 
         $evt.Priority | Should -Be 2 
@@ -48,23 +46,24 @@ Describe 'New-IcalEvent' {
         $evt.Status | Should -Be "TENTATIVE" 
         $evt.Summary | Should -Be "Summary Text" 
         $evt.Transparency | Should -Be "OPAQUE" 
-        $evt.RecurrenceId | Should -Be ([Ical.Net.DataTypes.CalDateTime](Get-Date -Month 1 -Year 2000 -Day 4)) 
+        $evt.RecurrenceId | Should -Be ([Ical.Net.DataTypes.CalDateTime]::new(2000,1,4,0,0,0)) 
         $evt.Url | Should -Be "https://www.rfc-editor.org/rfc/rfc2445#section-4.8.4.6" 
         $evt.End.Day | Should -Be 6 
 
         # TODO 4 days between start and end, End should not be present when Duration is.  May get caught in Serialization?
-        $evt.Duration | Should -Be ([timespan]::new(4,0,0,0))
+        $evt.Duration | Should -BeNullOrEmpty
+        
         $evt.Attachments.Count | Should -Be 0
         $evt.Attendees.Count | Should -Be 0
         $evt.Categories.Count | Should -Be 0
         $evt.Comments.Count | Should -Be 0
         $evt.Contacts.Count | Should -Be 0
-        $evt.ExceptionDates.Count | Should -Be 0
+        $evt.ExceptionDates.GetAllDates() | Should -BeNullOrEmpty
         $evt.ExceptionRules.Count | Should -Be 0
         $evt.RequestStatuses.Count | Should -Be 0
         $evt.RelatedComponents.Count | Should -Be 0
         $evt.Resources.Count | Should -Be 0
-        $evt.RecurrenceDates.Count | Should -Be 0
+        $evt.RecurrenceDates.GetAllDates() | Should -BeNullOrEmpty
         $evt.RecurrenceRules.Count | Should -Be 0
     }
      It 'Given minimum parameters' {
@@ -92,48 +91,72 @@ Describe 'New-IcalEvent' {
         $evt.RecurrenceId | Should -BeNullOrEmpty 
         $evt.Url | Should -BeNullOrEmpty
         $evt.End.Day | Should -BeNullOrEmpty
-
-        # TODO Default of type?
-        $evt.Duration | Should -Be ([Timespan]::new(0))
+        $evt.Duration | Should -BeNullOrEmpty
 
         $evt.Attachments.Count | Should -Be 0
         $evt.Attendees.Count | Should -Be 0
         $evt.Categories.Count | Should -Be 0
         $evt.Comments.Count | Should -Be 0
         $evt.Contacts.Count | Should -Be 0
-        $evt.ExceptionDates.Count | Should -Be 0
+        $evt.ExceptionDates.GetAllDates() | Should -BeNullOrEmpty
         $evt.ExceptionRules.Count | Should -Be 0
         $evt.RequestStatuses.Count | Should -Be 0
         $evt.RelatedComponents.Count | Should -Be 0
         $evt.Resources.Count | Should -Be 0
-        $evt.RecurrenceDates.Count | Should -Be 0
+        $evt.RecurrenceDates.GetAllDates() | Should -BeNullOrEmpty
         $evt.RecurrenceRules.Count | Should -Be 0
     }
-    It 'Given -Duration parameter' {
+    It 'Given -Duration parameter as Timespan' {
 
-        $evt = New-IcalEvent -Duration 10
-        $evt.Duration | Should -Be ([Timespan]::new(10))
+        $evt = New-IcalEvent -Duration ([Timespan]::new(1,2,3))
+        $evt.Duration.Seconds | Should -Be 3
+        $evt.Duration.Minutes | Should -Be 2
+        $evt.Duration.Hours | Should -Be 1
+        $evt.Start | Should -BeNullOrEmpty
+        $evt.End | Should -BeNullOrEmpty
+    }
+    It 'Given -Duration parameter as Duration' {
+
+        $evt = New-IcalEvent -Duration ([Ical.Net.DataTypes.Duration]::new(1,2,3,4,5))
+        $evt.Duration.Seconds | Should -Be 5
+        $evt.Duration.Minutes | Should -Be 4
+        $evt.Duration.Hours | Should -Be 3
+        $evt.Duration.Days | Should -Be 2
+        $evt.Duration.Weeks | Should -Be 1
         $evt.Start | Should -BeNullOrEmpty
         $evt.End | Should -BeNullOrEmpty
     }
     It 'Given -Duration, -End and parameters' {
 
         {New-IcalEvent `
-            -Duration 10 `
+            -Duration ([Ical.Net.DataTypes.Duration]::new(1,2,3,4,5)) `
             -End (Get-Date -Month 1 -Year 2000 -Day 6) } | 
-            Should -Throw
+            Should-Throw -ExceptionMessage "Parameter set cannot be resolved using the specified named parameters. One or more parameters issued cannot be used together or an insufficient number of parameters were provided."
     }
     It 'Given -Duration -Start parameters' {
 
         $evt = 
             New-IcalEvent `
-                -Duration 3456000000000 `
+                -Duration ([Timespan]::new(3456000000000)) `
                 -Start (Get-Date -Month 1 -Year 2000 -Day 2) 
 
-        $evt.Duration | Should -Be ([Timespan]::new(3456000000000))
+        $evt.Duration.Hours | Should -Be 96
         $evt.Start.Day | Should -Be 2
         #TODO End and Duration linked is this causing any issue on Serialize
-        $evt.End.Day | Should -Be 6
+        $evt.End | Should -BeNullOrEmpty
 
     }
+
+    It 'Given -GeographicLocation parameter as array' {
+
+        $evt = 
+            New-IcalEvent `
+                -GeographicLocation 12,13
+
+        $evt.GeographicLocation.Latitude | Should -Be 12.0
+        $evt.GeographicLocation.Longitude | Should -Be 13.0
+
+    }
+
+
 }

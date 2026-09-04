@@ -12,7 +12,7 @@
 RootModule = 'ImportIcal.dll'
 
 # Version number of this module.
-ModuleVersion = '0.0.3'
+ModuleVersion = '0.0.4'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -33,7 +33,7 @@ Copyright = '(c) Craig Chamberlain. All rights reserved.'
 Description = 'Cmdlets to create and assemble objects from the Ical.Net library.'
 
 # Minimum version of the PowerShell engine required by this module
-PowerShellVersion = '7.0'
+PowerShellVersion = '7.6.5'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''

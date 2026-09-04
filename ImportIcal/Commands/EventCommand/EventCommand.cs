@@ -1,6 +1,6 @@
 ﻿using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
-using NodaTime;
+using ImportIcal.ArgumentTransformationAttribute;
 using System.Management.Automation;
 
 //https://www.rfc-editor.org/rfc/rfc2445#section-4.6.1
@@ -21,6 +21,7 @@ namespace ImportIcal.Commands.EventCommand
         // TODO type accelerator? Not that easy to create a noda date in PWSH?
         // Is it best to leave Ical.Net to create this? Test at serialization.
         [Parameter(ValueFromPipelineByPropertyName = true)]
+        [CalDateTimeTransformation]
         public CalDateTime? Created { get; set; }
 
         //https://www.rfc-editor.org/rfc/rfc2445#section-4.8.1.5
@@ -29,20 +30,22 @@ namespace ImportIcal.Commands.EventCommand
 
         //https://www.rfc-editor.org/rfc/rfc2445#section-4.8.2.4
         [Parameter(ValueFromPipelineByPropertyName = true)]
+        [CalDateTimeTransformation]
         public CalDateTime? Start { get; set; }
 
         //https://www.rfc-editor.org/rfc/rfc2445#section-4.8.1.6
         // e.g.         
         // 37.386013;-122.082932
         // Co-ords.
-        // TODO test can be supplied as a pair of strings 
-        // Type Accelleration?
+        // TODO test can be supplied as a pair of strings
         [Parameter(ValueFromPipelineByPropertyName = true)]
+        [GeographicLocation]
         public GeographicLocation? GeographicLocation { get; set; }
 
         // TODO check is this best left to .Ical.Net?
         //  https://www.rfc-editor.org/rfc/rfc2445#section-4.8.7.3
         [Parameter(ValueFromPipelineByPropertyName = true)]
+        [CalDateTimeTransformation]
         public CalDateTime? LastModified { get; set; }
 
         // https://www.rfc-editor.org/rfc/rfc2445#section-4.8.1.7
@@ -118,6 +121,8 @@ namespace ImportIcal.Commands.EventCommand
         /// </summary>
         /// Identify element in a series. Can also be a range?
         [Parameter(ValueFromPipelineByPropertyName = true)]
+        [Obsolete("'EventCommand.RecurrenceId' is obsolete: ''RecurringComponent.ExceptionRules' is obsolete: 'EXRULE is marked as deprecated in RFC 5545 and will be removed in a future version'.")]
+        [CalDateTimeTransformation]
         public CalDateTime? RecurrenceId { get; set; }
 
         /// <summary>
@@ -129,11 +134,13 @@ namespace ImportIcal.Commands.EventCommand
 
         //https://www.rfc-editor.org/rfc/rfc2445#section-4.8.2.2
         [Parameter(ValueFromPipelineByPropertyName = true, ParameterSetName = Sets.DateEndSet)]
+        [CalDateTimeTransformation]
         public CalDateTime? End { get; set; }
 
         //https://www.rfc-editor.org/rfc/rfc2445#section-4.8.2.5
         [Parameter(ValueFromPipelineByPropertyName = true, ParameterSetName = Sets.DurationSet)]
-        public TimeSpan? Duration { get; set; }
+        [DurationTransformation]
+        public Duration? Duration { get; set; }
 
         protected static class Sets
         {
@@ -161,7 +168,7 @@ namespace ImportIcal.Commands.EventCommand
             if (Transparency != null) evt.Transparency = Transparency.ToString();
             if (Url != null) evt.Url = Url;
             if (RecurrenceId != null) evt.RecurrenceId = RecurrenceId;
-            if (Duration != null) evt.Duration = (TimeSpan)Duration;
+            if (Duration != null) evt.Duration = Duration;
             if (End != null) evt.End = End;
             if (Location != null) evt.Location = Location;
 
