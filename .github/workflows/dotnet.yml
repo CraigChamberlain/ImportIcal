@@ -24,6 +24,9 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+    - name: Update Pester
+      shell: pwsh 
+      run: Install-Module Pester -Force -Scope CurrentUser
     - name: Test
       shell: pwsh
       run: ./ImportIcal/Test.ps1
