@@ -78,6 +78,8 @@ CmdletsToExport = @(
     "Add-Event",
     "New-Alarm",
     "Add-Alarm",
+    "New-Attendee",
+    "Add-Attendee",
     "New-Organizer",
     "Add-Organizer",
     "Import-Calendar", 
