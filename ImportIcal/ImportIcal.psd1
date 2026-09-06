@@ -12,7 +12,7 @@
 RootModule = 'ImportIcal.dll'
 
 # Version number of this module.
-ModuleVersion = '0.0.4'
+ModuleVersion = '0.0.3'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -111,7 +111,7 @@ PrivateData = @{
         # LicenseUri = ''
 
         # A URL to the main website for this project.
-        #ProjectUri = 'https://github.com/CraigChamberlain/ImportIcal'
+        ProjectUri = 'https://github.com/CraigChamberlain/ImportIcal'
 
         # A URL to an icon representing this module.
         # IconUri = ''
@@ -126,7 +126,7 @@ PrivateData = @{
         # RequireLicenseAcceptance = $false
 
         # External dependent modules of this module
-        ExternalModuleDependencies = @("Ical.Net")
+        #ExternalModuleDependencies = @("Ical.Net")
 
     } # End of PSData hashtable
 

@@ -157,6 +157,18 @@ Describe 'New-IcalEvent' {
         $evt.GeographicLocation.Longitude | Should -Be 13.0
 
     }
+    
+    Write-Warning "Test for parsing from string should hopefully fail when Ical.Net fixes bug."
 
+    It 'Given -GeographicLocation parameter as string pair' {
+
+        $evt = 
+            New-IcalEvent `
+                -GeographicLocation "37.386013;-122.082932"
+
+        $evt.GeographicLocation.Latitude | Should -Be 0 #37.386013
+        $evt.GeographicLocation.Longitude | Should -Be 0 #-122.082932
+
+    }
 
 }
