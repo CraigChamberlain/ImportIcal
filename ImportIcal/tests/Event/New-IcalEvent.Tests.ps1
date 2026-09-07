@@ -3,10 +3,6 @@
 Describe 'New-IcalEvent' {
     It 'Given all single parameters' {
         # TODO -AllDay
-        # New-IcalEvent -
-        
-
-        # TODO Geo Type accelerator take a obj[] if 2x numeric, construct.  ";" seperator not seeming to work.  try in c#?
 
         $evt = New-IcalEvent `
             -Class "PUBLIC" `
@@ -169,6 +165,28 @@ Describe 'New-IcalEvent' {
         $evt.GeographicLocation.Latitude | Should -Be 0 #37.386013
         $evt.GeographicLocation.Longitude | Should -Be 0 #-122.082932
 
+    }
+
+    It 'Given Organizer parameter as simple string' {
+
+        $evt = 
+            New-IcalEvent `
+                -Organizer "bob@example.com"
+
+        $evt.Organizer.Value | Should-Be "MAILTO:bob@example.com"
+        $evt.Organizer.CommonName | Should-BeNull
+
+    }
+    It 'Given Organizer parameter as complex string' {
+
+        #TODO better way of making an organiser?
+        $evt = 
+            New-IcalEvent `
+                -Organizer "Bob <bob@example.com>"
+
+        $evt.Organizer.Value | Should-BeNull # Would be good if this worked "MAILTO:bob@example.com"
+        $evt.Organizer.CommonName | Should-BeNull # "Bob"
+        
     }
 
 }

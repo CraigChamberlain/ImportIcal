@@ -8,6 +8,8 @@ Describe 'New-IcalAttendee' {
         $Attendee.Rsvp | Should-BeFalse
         $Attendee.Role | Should-Be  "REQ-PARTICIPANT"
         $Attendee.Value | Should-Be  "mailto:bob@domain.com"
+        $Attendee.ParticipationStatus | Should-Be  "NEEDS-ACTION"
+        
     }
     It 'Given Trigger all params' {
         $Attendee = 
@@ -15,12 +17,14 @@ Describe 'New-IcalAttendee' {
                 -CommonName "Bob" `
                 -ExpectRsvp `
                 -Role "CHAIR" `
-                -Value "MAILTO:bob@domain.com"
+                -Value "MAILTO:bob@domain.com" `
+                -ParticipationStatus "ACCEPTED"
         
         $Attendee.CommonName | Should-Be "Bob"
         $Attendee.Rsvp | Should-BeTrue
         $Attendee.Role | Should-Be  "CHAIR"
         $Attendee.Value | Should-Be  "MAILTO:bob@domain.com"
+        $Attendee.ParticipationStatus | Should-Be  "ACCEPTED"
     }
     
 
