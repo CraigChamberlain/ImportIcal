@@ -6,8 +6,12 @@ namespace ImportIcal.Commands.OrganizerCommand
 {
     public abstract class OrganizerCommand : PSCmdlet
     {
-        // TODO add links to spec
-        // To do add examples
+
+        [Parameter(ValueFromPipelineByPropertyName = true,Mandatory = true)]
+        //TODO this would be nice to have
+        //[ValidatePattern("MAILTO:[a-zA-Z0-9@/.]*")]
+        public Uri Value { get; set; } = null!;
+
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public Uri? SentBy { get; set; }
 
@@ -30,9 +34,9 @@ namespace ImportIcal.Commands.OrganizerCommand
                 org.Language = Language;
             if (DirectoryEntry is not null)
                 org.DirectoryEntry = DirectoryEntry;
+            org.Value = Value; 
         
         }
-
 
     }
 }
