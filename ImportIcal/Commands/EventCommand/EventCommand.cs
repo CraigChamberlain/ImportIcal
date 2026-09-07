@@ -5,7 +5,8 @@ using System.Management.Automation;
 
 //https://www.rfc-editor.org/rfc/rfc2445#section-4.6.1
 namespace ImportIcal.Commands.EventCommand
-{    
+{
+    [CmdletBinding(DefaultParameterSetName = Sets.DateEndSet)]
     public abstract partial class EventCommand : PSCmdlet
     {
         //TODO Allday event? start 00 Duration 24H?
@@ -18,8 +19,6 @@ namespace ImportIcal.Commands.EventCommand
         public string? Class { get; set; }
 
         // https://www.rfc-editor.org/rfc/rfc2445#section-4.8.7.1
-        // TODO type accelerator? Not that easy to create a noda date in PWSH?
-        // Is it best to leave Ical.Net to create this? Test at serialization.
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [CalDateTimeTransformation]
         public CalDateTime? Created { get; set; }
@@ -42,7 +41,6 @@ namespace ImportIcal.Commands.EventCommand
         [GeographicLocation]
         public GeographicLocation? GeographicLocation { get; set; }
 
-        // TODO check is this best left to .Ical.Net?
         //  https://www.rfc-editor.org/rfc/rfc2445#section-4.8.7.3
         [Parameter(ValueFromPipelineByPropertyName = true)]
         [CalDateTimeTransformation]
@@ -169,6 +167,8 @@ namespace ImportIcal.Commands.EventCommand
             if (Url != null) evt.Url = Url;
             if (RecurrenceId != null) evt.RecurrenceId = RecurrenceId;
             if (Duration != null) evt.Duration = Duration;
+
+            // TODO validate if is Date or DateTime?
             if (End != null) evt.End = End;
             if (Location != null) evt.Location = Location;
 
