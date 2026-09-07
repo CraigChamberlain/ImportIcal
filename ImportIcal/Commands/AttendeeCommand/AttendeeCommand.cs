@@ -1,7 +1,4 @@
-﻿using Ical.Net;
-using Ical.Net.CalendarComponents;
-using Ical.Net.DataTypes;
-using ImportIcal.ArgumentTransformationAttribute;
+﻿using Ical.Net.DataTypes;
 using System.Management.Automation;
 
 namespace ImportIcal.Commands.AttendeeCommand
@@ -23,6 +20,17 @@ namespace ImportIcal.Commands.AttendeeCommand
         [Parameter(ValueFromPipelineByPropertyName = true)]
         public String? CommonName { get; set; }
 
+        // https://www.rfc-editor.org/info/rfc2445/#section-4.2.12
+        //"NEEDS-ACTION"        ; To-do needs action
+        //"ACCEPTED"            ; To-do accepted
+        //"DECLINED"            ; To-do declined
+        // "TENTATIVE"          ; To-do tentatively accepted
+        // "DELEGATED"          ; To-do delegated
+        // "COMPLETED"          ; To-do completed.  COMPLETED property has date/time completed.
+        // "IN-PROCESS"         ; To-do in process of being completed
+        [Parameter(ValueFromPipelineByPropertyName = true)]
+        public string ParticipationStatus { get; set; } = "NEEDS-ACTION";
+
         // https://www.rfc-editor.org/info/rfc2445/#section-4.2.17
         // RSVP Expectation
         [Parameter(ValueFromPipelineByPropertyName = true)]
@@ -40,6 +48,7 @@ namespace ImportIcal.Commands.AttendeeCommand
             attendee.CommonName = CommonName;
             attendee.Rsvp = ExpectRsvp.IsPresent;
             attendee.Value = Value;
+            attendee.ParticipationStatus = ParticipationStatus;
 
             return attendee;
         }
